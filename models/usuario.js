@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
      email:{type:String, maxlength:50, unique:true},
      password:{type:String, required:true},
      rol:{type:String, required:true, maxlength:20},
-     //admin_rol    vendedor_rol    almacenista_rol
+     //admin_rol    VENDEDOR_rol    ALMACENISTA_rol
      estado:{type:Number,default:1},
      createAt:{type:Date,default:Date.now},
  })

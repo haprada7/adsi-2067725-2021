@@ -4,7 +4,7 @@ import Usuario from '../models/usuario.js';
 
 const generarJWT=(uid='')=>{
 return new Promise((resolve,reject)=>{
-checkToken()
+   
 const payload={uid}
 jwt.sign(payload,process.env.SECRETPRIVATEKEY,{
 expiresIn:'7d'
@@ -21,7 +21,7 @@ expiresIn:'7d'
 
 const validarJWT=async(req,res,next)=>{
 const token =req.header('token')
-if(!token){
+if(! token){
     return res.status(401).json({
     msg:'No hay token en la peticion'
     })
