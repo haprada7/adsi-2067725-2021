@@ -2,10 +2,9 @@ import {Router} from 'express';
 import {check} from 'express-validator';
 import {validarCampos} from '../middlewares/validar-campos.js';
 import { validarJWT } from '../middlewares/validar-jwt.js';
-import { existeArticuloById, existeArticuloByNombre } from '../helpers/articulo.js';
 import { validarRoles } from '../middlewares/validar-rol.js';
-import ventaControllers from '../controllers/venta.js';
-import { existeseriecomprobante, existeVentaById } from '../helpers/venta.js';
+import compraControllers from '../controllers/compra.js';
+import { existeCompraById, existeseriecomprobanteC } from '../helpers/compra.js';
 
 const router = Router();
 
@@ -13,59 +12,58 @@ router.get('/',[
     validarJWT,
     validarRoles('VENDEDOR_rol'),
     validarCampos
-],ventaControllers.ventaGet);
+],compraControllers.compraGet);
 
 router.get('/:id',[
     validarJWT,
     validarRoles('VENDEDOR_rol'),
-    check('id','no es un id valido').isMongoId(),
-    check('id').custom(existeArticuloById),    
+    check('id','no es un id valido').isMongoId(), 
     validarCampos
     
-],ventaControllers.ventaGetById)
+],compraControllers.compraGetById)
 
 router.post('/',[
     validarJWT,
     validarRoles('VENDEDOR_rol'),
-    check('seriecomprobante').custom(existeseriecomprobante),
+    check('seriecomprobante').custom(existeseriecomprobanteC),
     validarCampos
 
-],ventaControllers.ventaPost);
+],compraControllers.compraPost);
 
 router.put('/:id',[
     validarJWT,
     validarRoles('VENDEDOR_rol'),
     check('id','no es un id valido').isMongoId(),
-    check('id').custom(existeVentaById),
+    check('id').custom(existeCompraById),
     validarCampos
-],ventaControllers.ventaPut);
+],compraControllers.compraPut);
 
 
 router.put('/activar/:id',[
     validarJWT,
     validarRoles('VENDEDOR_rol'),
     check('id','no es un id valido').isMongoId(),
-    check('id').custom(existeVentaById),    
+    check('id').custom(existeCompraById),    
     validarCampos
-],ventaControllers.ventaPutActivar);
+],compraControllers.compraPutActivar);
 
 
 router.put('/desactivar/:id',[
     validarJWT,
     validarRoles('VENDEDOR_rol'),
     check('id','no es un id valido').isMongoId(),
-    check('id').custom(existeVentaById),    
+    check('id').custom(existeCompraById),    
     validarCampos
-],ventaControllers.ventaPutDesactivar);
+],compraControllers.compraPutDesactivar);
 
 
 router.delete('/:id',[
     validarJWT,
     validarRoles('VENDEDOR_rol'),
     check('id','no es un id valido').isMongoId(),
-    check('id').custom(existeVentaById),    
+    check('id').custom(existeCompraById),    
     validarCampos
-],ventaControllers.ventaDelete);
+],compraControllers.compraDelete);
 
 
 

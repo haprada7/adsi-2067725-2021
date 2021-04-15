@@ -1,32 +1,32 @@
-import Venta from '../models/venta.js'
+import Compra from '../models/compra.js'
 import Articulo from '../models/articulo.js'
 
 
-const ventaControllers = {
+const compraControllers = {
 
 
-    ventaGet: async(res)=>{
-        const venta= await Venta
+    compraGet: async(res)=>{
+        const compra= await Compra
         .find()
         .populate('persona','nombre')
                 
         res.json({
-            venta
+            compra
         })
     },
     
     
     
-    ventaGetById: async(req,res)=>{
+    compraGetById: async(req,res)=>{
         const {id}=req.params;
-        const venta=await Venta
+        const compra=await Compra
         .findOne({
             _id:id
         })
         
     
         res.json({
-            venta
+            compra
         })
     },
     
@@ -49,56 +49,56 @@ const ventaControllers = {
 
 
     
-    ventaPost: async (req,res)=>{
+    compraPost: async (req,res)=>{
         const {usuario,persona,tipocomprobante,seriecomprobante,numcomprobante,impuesto,total,detalle}=req.body
-        const venta = new Venta({usuario,persona,tipocomprobante,seriecomprobante,numcomprobante,impuesto,total,detalle})
+        const compra = new Compra({usuario,persona,tipocomprobante,seriecomprobante,numcomprobante,impuesto,total,detalle})
     
-        await venta.save();
+        await compra.save();
 
-        detalle.map((articulo)=>restarStock(articulo._id,articulo.cantidad))
+        detalle.map((articulo)=>AumentarStock(articulo._id,articulo.cantidad))
 
     
         res.json({
-            venta
+            compra
         })
     },
     
-    ventaPut: async (req,res)=>{
+    compraPut: async (req,res)=>{
     const {id}=req.params
     const {_id,createAt,__v,...resto}=req.body
     
-    const venta=await Articulo.findByIdAndUpdate(id,resto);
+    const compra=await Articulo.findByIdAndUpdate(id,resto);
     
     res.json({
-        venta
+        compra
     })
     },
     
   
     
-    ventaPutActivar: async (req,res)=>{
+    compraPutActivar: async (req,res)=>{
         const {id}=req.params
-        const venta= await venta.findByIdAndUpdate(id,{estado:1})
+        const compra= await compra.findByIdAndUpdate(id,{estado:1})
         detalle.map((articulo)=>restarStock(articulo._id,articulo.cantidad))
         res.json({
-            venta
+            compra
         })
     },
     
-    ventaPutDesactivar: async (req,res)=>{
+    compraPutDesactivar: async (req,res)=>{
         const {id}=req.params
-        const venta= await venta.findByIdAndUpdate(id,{estado:0})
+        const compra= await compra.findByIdAndUpdate(id,{estado:0})
         detalle.map((articulo)=>incrementarStock(articulo._id,articulo.cantidad))
         res.json({
-            venta
+            compra
         })
     },
     
-    ventaDelete: async (req,res)=>{
+    compraDelete: async (req,res)=>{
         const {id}=req.params
-        const venta= await venta.findByIdAndDelete(id)
+        const compra= await compra.findByIdAndDelete(id)
         res.json({
-            venta
+            compra
         })
     
         
@@ -110,4 +110,4 @@ const ventaControllers = {
     
     
     
-    export default ventaControllers
+    export default compraControllers

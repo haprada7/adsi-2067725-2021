@@ -43,7 +43,7 @@ const articulosControllers = {
     
     articuloPut: async (req,res)=>{
     const {id}=req.params
-    const {_id,createAt,__v,...resto}=req.body
+    const {_id,createAt,codigo,__v,...resto}=req.body
     
     const articulo=await Articulo.findByIdAndUpdate(id,resto);
     
